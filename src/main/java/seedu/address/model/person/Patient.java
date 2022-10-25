@@ -34,7 +34,7 @@ public class Patient extends Person {
     }
 
     public Category getCategory() {
-        return new Category("P");
+        return new Category(Category.PATIENT_SYMBOL);
     }
 
     public String getCategoryIndicator() {

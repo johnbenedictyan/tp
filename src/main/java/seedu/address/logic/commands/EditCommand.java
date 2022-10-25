@@ -150,7 +150,7 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        if (personToEdit instanceof Patient && updatedCategory.categoryName.equals("P")) {
+        if (personToEdit instanceof Patient && updatedCategory.categoryName.equals(Category.PATIENT_SYMBOL)) {
             List<DateTime> originalDateTime = ((Patient) personToEdit).getDatesTimes();
             Optional<List<DateTime>> toBeUpdateDateTime = editPersonDescriptor.getDatesTimes();
             Optional<List<Index>> toBeUpdateDateTimeIndexes = editPersonDescriptor.getDateTimeIndexes();
@@ -160,7 +160,7 @@ public class EditCommand extends Command {
                     .orElse(((Patient) personToEdit).getVisitStatus());
             return new Patient(uid, updatedName, updatedGender, updatedPhone, updatedEmail,
                     updatedAddress, updatedTags, updatedDateTime, Optional.of(updatedVisitStatus));
-        } else if (updatedCategory.categoryName.equals("P")) {
+        } else if (updatedCategory.categoryName.equals(Category.PATIENT_SYMBOL)) {
             List<DateTime> updatedDateTime = editPersonDescriptor.getDatesTimes().orElse(null);
             VisitStatus updatedVisitStatus = editPersonDescriptor.getVisitStatus()
                     .orElse(((Patient) personToEdit).getVisitStatus());

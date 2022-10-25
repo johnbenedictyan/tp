@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.model.category.Category;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateTime;
 import seedu.address.model.person.Email;
@@ -25,7 +26,7 @@ import seedu.address.model.util.SampleDataUtil;
 public class PatientBuilder {
 
     public static final String DEFAULT_UID = "100";
-    public static final String DEFAULT_CATEGORY = "P";
+    public static final String DEFAULT_CATEGORY = Category.PATIENT_SYMBOL;
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_GENDER = "F";
     public static final String DEFAULT_PHONE = "85355255";
@@ -64,7 +65,7 @@ public class PatientBuilder {
      * Initializes the PatientBuilder with the data of {@code patientToCopy}.
      */
     public PatientBuilder(Person patientToCopy) {
-        category = "P";
+        category = Category.PATIENT_SYMBOL;
         uid = patientToCopy.getUid();
         name = patientToCopy.getName();
         gender = patientToCopy.getGender();

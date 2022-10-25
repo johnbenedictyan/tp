@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.category.Category;
 import seedu.address.model.person.Person;
 
 /**
@@ -32,7 +33,7 @@ import seedu.address.model.person.Person;
 public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder()
-            .withUid("1").withCategory("P")
+            .withUid("1").withCategory(Category.PATIENT_SYMBOL)
             .withName("Alice Pauline").withGender("F")
             .withAddress("123, Jurong West Ave 6, #08-111")
             .withEmail("alice@example.com")
@@ -41,7 +42,7 @@ public class TypicalPersons {
             .withTags("friends")
             .withVisitStatus("false").build();
     public static final Person BENSON = new PersonBuilder()
-            .withUid("2").withCategory("P")
+            .withUid("2").withCategory(Category.PATIENT_SYMBOL)
             .withName("Benson Meier").withGender("M")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com")
@@ -50,7 +51,7 @@ public class TypicalPersons {
             .withTags("owesMoney", "friends")
             .withVisitStatus("true").build();
     public static final Person CARL = new PersonBuilder()
-            .withUid("3").withCategory("P")
+            .withUid("3").withCategory(Category.PATIENT_SYMBOL)
             .withName("Carl Kurz").withGender("M")
             .withPhone("95352563")
             .withDatesTimes("2022-11-10T15:00", "2022-12-10T14:00")
@@ -58,7 +59,7 @@ public class TypicalPersons {
             .withAddress("wall street")
             .withVisitStatus("false").build();
     public static final Person DANIEL = new PersonBuilder()
-            .withUid("4").withCategory("P")
+            .withUid("4").withCategory(Category.PATIENT_SYMBOL)
             .withName("Daniel Meier")
             .withGender("M")
             .withPhone("87652533")
@@ -75,7 +76,7 @@ public class TypicalPersons {
             .withDatesTimes("2022-11-15T12:00")
             .withAddress("michegan ave").build();
     public static final Person FIONA = new PersonBuilder()
-            .withUid("6").withCategory("P")
+            .withUid("6").withCategory(Category.PATIENT_SYMBOL)
             .withName("Fiona Kunz")
             .withGender("F")
             .withPhone("9482427")
@@ -85,7 +86,7 @@ public class TypicalPersons {
             .withVisitStatus("false").build();
     public static final Person GEORGE = new PersonBuilder()
             .withUid("7")
-            .withCategory("P")
+            .withCategory(Category.PATIENT_SYMBOL)
             .withName("George Best")
             .withGender("M")
             .withPhone("9482442")
@@ -95,7 +96,7 @@ public class TypicalPersons {
 
     // Manually added
     public static final Person HOON = new PersonBuilder()
-            .withUid("8").withCategory("P")
+            .withUid("8").withCategory(Category.PATIENT_SYMBOL)
             .withName("Hoon Meier")
             .withGender("M")
             .withPhone("8482424")
@@ -105,7 +106,7 @@ public class TypicalPersons {
             .withVisitStatus("false").build();
     public static final Person IDA = new PersonBuilder()
             .withUid("9")
-            .withCategory("P")
+            .withCategory(Category.PATIENT_SYMBOL)
             .withName("Ida Mueller")
             .withGender("F")
             .withPhone("8482131")

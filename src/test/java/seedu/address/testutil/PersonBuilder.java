@@ -25,7 +25,7 @@ import seedu.address.model.util.SampleDataUtil;
  * A utility class to help with building Person objects.
  */
 public class PersonBuilder {
-    public static final String DEFAULT_CATEGORY = "P";
+    public static final String DEFAULT_CATEGORY = Category.PATIENT_SYMBOL;
     public static final String DEFAULT_UID = "1";
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_GENDER = "F";
@@ -75,7 +75,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
-        if (personToCopy.getCategory().categoryName.equals("P")) {
+        if (personToCopy.getCategory().categoryName.equals(Category.PATIENT_SYMBOL)) {
             dateTimeList = new ArrayList<>(((Patient) personToCopy).getDatesTimes());
             visitStatus = ((Patient) personToCopy).getVisitStatus();
         }
@@ -179,7 +179,7 @@ public class PersonBuilder {
     public Person build() {
         if (category.categoryName.equals("N")) {
             return new Nurse(uid, name, gender, phone, email, address, tags);
-        } else if (this.category.categoryName.equals("P")) {
+        } else if (this.category.categoryName.equals(Category.PATIENT_SYMBOL)) {
             return new Patient(uid, name, gender, phone, email, address, tags, dateTimeList, Optional.of(visitStatus));
         }
         return new Person(uid, name, gender, phone, email, address, tags);

@@ -16,13 +16,13 @@ public class CategoryTest {
     }
 
     @Test
-    public void constructor_invaliCategory_throwsIllegalArgumentException() {
-        String invaliCategory = "";
-        assertThrows(IllegalArgumentException.class, () -> new Category(invaliCategory));
+    public void constructor_invalidCategory_throwsIllegalArgumentException() {
+        String invalidCategory = "";
+        assertThrows(IllegalArgumentException.class, () -> new Category(invalidCategory));
     }
 
     @Test
-    public void isValiCategory() {
+    public void isValidCategory() {
         // nullCategory
         assertThrows(NullPointerException.class, () -> Category.isValidCategoryName(null));
 
@@ -38,6 +38,6 @@ public class CategoryTest {
 
         // validCategory formats
         assertTrue(Category.isValidCategoryName("N")); // Female
-        assertTrue(Category.isValidCategoryName("P")); // Male
+        assertTrue(Category.isValidCategoryName(Category.PATIENT_SYMBOL)); // Male
     }
 }

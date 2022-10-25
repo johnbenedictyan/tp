@@ -59,7 +59,7 @@ public class ListCommandTest {
         Command listCommand = new ListCommand(Optional.empty(), Optional.of(new Category(Category.PATIENT_SYMBOL)),
                 Optional.empty(), Optional.empty());
         assertCommandSuccess(listCommand,
-                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "P", "NIL", "NIL"), expectedModel);
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", Category.PATIENT_SYMBOL, "NIL", "NIL"), expectedModel);
     }
 
     @Test
@@ -100,6 +100,6 @@ public class ListCommandTest {
                 Optional.of(new Gender(Gender.FEMALE_SYMBOL)),
                 Optional.of(new Tag("friends")));
         assertCommandSuccess(listCommand,
-                model, String.format(ListCommand.MESSAGE_SUCCESS, "Jurong", "P", "F", "friends"), expectedModel);
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "Jurong", Category.PATIENT_SYMBOL, "F", "friends"), expectedModel);
     }
 }

@@ -22,6 +22,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.category.Category;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -31,7 +32,7 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
  */
 public class CommandTestUtil {
 
-    public static final String VALID_CATEGORY_AMY = "P";
+    public static final String VALID_CATEGORY_AMY = Category.PATIENT_SYMBOL;
     public static final String VALID_CATEGORY_BOB = "N";
     public static final String VALID_UID_AMY = "10";
     public static final String VALID_UID_BOB = "11";
