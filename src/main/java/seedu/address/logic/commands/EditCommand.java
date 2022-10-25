@@ -179,8 +179,8 @@ public class EditCommand extends Command {
             throws CommandException {
         List<DateTime> updatedDateTime = new ArrayList<>();
 
-        boolean isDateTimeNull = toBeUpdateDateTimes.equals(Optional.empty());
-        boolean isDateTimeIndexesNull = toBeUpdateDateTimesIndexes.equals(Optional.empty());
+        boolean isDateTimeNull = toBeUpdateDateTimes.isEmpty();
+        boolean isDateTimeIndexesNull = toBeUpdateDateTimesIndexes.isEmpty();
         List<DateTime> toBeUpdateDateTime = new ArrayList<>();
         List<Index> toBeUpdateDateTimeIndexes = new ArrayList<>();
 
