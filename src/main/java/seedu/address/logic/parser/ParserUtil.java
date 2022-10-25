@@ -262,6 +262,7 @@ public class ParserUtil {
     public static Gender parseGender(String gender) throws ParseException {
         requireNonNull(gender);
         String trimmedGender = gender.trim();
+        trimmedGender = Gender.formatMisspelling(trimmedGender);
         if (!Gender.isValidGender(trimmedGender)) {
             throw new ParseException(Gender.MESSAGE_CONSTRAINTS);
         }
@@ -292,6 +293,7 @@ public class ParserUtil {
     public static Category parseCategory(String category) throws ParseException {
         requireNonNull(category);
         String trimmedCategory = category.trim();
+        trimmedCategory = Category.formatMisspelling(trimmedCategory);
         if (!Category.isValidCategoryName(trimmedCategory)) {
             throw new ParseException(Category.MESSAGE_CONSTRAINTS);
         }
