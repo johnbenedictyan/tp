@@ -19,7 +19,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for
+ * ListCommand.
  */
 public class ListCommandTest {
 
@@ -42,7 +43,7 @@ public class ListCommandTest {
 
     @Test
     public void execute_addressFilterApplied_showsJurongUsers() {
-        Predicate<Person> predicate = x -> x.getAddress().value.contains("Jurong");
+        Predicate<Person> predicate = x -> x.getAddress().isSimilarTo(new Address("Jurong"));
         expectedModel.updateFilteredPersonList(predicate);
 
         Command listCommand = new ListCommand(Optional.of(new Address("Jurong")), Optional.empty(),
@@ -59,7 +60,8 @@ public class ListCommandTest {
         Command listCommand = new ListCommand(Optional.empty(), Optional.of(new Category(Category.PATIENT_SYMBOL)),
                 Optional.empty(), Optional.empty());
         assertCommandSuccess(listCommand,
-                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", Category.PATIENT_SYMBOL, "NIL", "NIL"), expectedModel);
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", Category.PATIENT_SYMBOL, "NIL", "NIL"),
+                expectedModel);
     }
 
     @Test
@@ -87,7 +89,7 @@ public class ListCommandTest {
     @Test
     public void execute_allFiltersApplied_showsAlice() {
         Predicate<Person> predicate = x -> {
-            boolean addressMatch = x.getAddress().value.contains("Jurong");
+            boolean addressMatch = x.getAddress().isSimilarTo(new Address("Jurong"));
             boolean categoryMatch = x.getCategory().categoryName.equals(Category.PATIENT_SYMBOL);
             boolean genderMatch = x.getGender().gender.equals(Gender.FEMALE_SYMBOL);
             boolean tagMatch = x.getTags().stream().anyMatch(y -> y.tagName == "friends");
@@ -100,6 +102,7 @@ public class ListCommandTest {
                 Optional.of(new Gender(Gender.FEMALE_SYMBOL)),
                 Optional.of(new Tag("friends")));
         assertCommandSuccess(listCommand,
-                model, String.format(ListCommand.MESSAGE_SUCCESS, "Jurong", Category.PATIENT_SYMBOL, "F", "friends"), expectedModel);
+                model, String.format(ListCommand.MESSAGE_SUCCESS, "Jurong", Category.PATIENT_SYMBOL, "F", "friends"),
+                expectedModel);
     }
 }

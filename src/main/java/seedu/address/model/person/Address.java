@@ -54,4 +54,8 @@ public class Address {
         return value.hashCode();
     }
 
+    public boolean isSimilarTo(Address address) {
+        return address.value.toLowerCase().contains(address.value.toLowerCase());
+    }
+
 }

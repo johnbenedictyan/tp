@@ -52,24 +52,19 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
-        Predicate<Person> predicate = x -> {
-            boolean addressMatch = x.getAddress().value.toLowerCase()
-                    .contains(address.orElse(x.getAddress()).value.toLowerCase());
-            boolean categoryMatch = x.getCategory().equalsIgnoreCase(category.orElse(x.getCategory()));
-            boolean genderMatch = x.getGender().equalsIgnoreCase(gender.orElse(x.getGender()));
+        Predicate<Person> addressPredicate = testPerson -> address
+                .map(address -> testPerson.getAddress().isSimilarTo(address)).orElse(true);
+        Predicate<Person> categoryPredicate = testPerson -> category
+                .map(category -> testPerson.getCategory().equals(category)).orElse(true);
+        Predicate<Person> genderPredicate = testPerson -> gender.map(gender -> testPerson.getGender().equals(gender))
+                .orElse(true);
+        Predicate<Person> tagPredicate = testPerson -> tag.map(tag -> {
+            return testPerson.getTags().isEmpty()
+                    ? false
+                    : testPerson.getTags().contains(tag);
+        }).orElse(true);
+        Predicate<Person> predicate = addressPredicate.and(categoryPredicate).and(genderPredicate).and(tagPredicate);
 
-            boolean tagMatch;
-            if (x.getTags().size() == 0) {
-                tagMatch = tag.isEmpty();
-            } else {
-                Predicate<Tag> tagPredicate = y -> {
-                    Tag tagToCompare = tag.orElse((Tag) x.getTags().toArray()[0]);
-                    return y.equals(tagToCompare);
-                };
-                tagMatch = x.getTags().stream().anyMatch(tagPredicate);
-            }
-            return addressMatch && categoryMatch && genderMatch && tagMatch;
-        };
         model.updateFilteredPersonList(predicate);
 
         final String[] filteredGender = new String[1];
