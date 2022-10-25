@@ -4,7 +4,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.model.category.Category;
@@ -47,6 +49,14 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+    }
+
+    public static Person of(Category category, Uid id, Name name, Gender gender, Phone phone, Email email,
+            Address address, Set<Tag> tagList, List<DateTime> dateTimeList, Optional<VisitStatus> visitStatus) {
+        if (category.isNurse()) {
+            return new Nurse(id, name, gender, phone, email, address, tagList);
+        }
+        return new Patient(id, name, gender, phone, email, address, tagList, dateTimeList, visitStatus);
     }
 
     /**
@@ -168,27 +178,21 @@ public class Person {
         if (otherPerson == this) {
             return true;
         }
-
         if (otherPerson.getName().equals(getName())) {
             counter++;
         }
-
         if (otherPerson.getGender().equals(getGender())) {
             counter++;
         }
-
         if (otherPerson.getPhone().equals(getPhone())) {
             counter++;
         }
-
         if (otherPerson.getEmail().equals(getEmail())) {
             counter++;
         }
-
         if (otherPerson.getAddress().equals(getAddress())) {
             counter++;
         }
-
         if (otherPerson.getTags().equals(getTags())) {
             counter++;
         }

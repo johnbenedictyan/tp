@@ -1,10 +1,12 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.model.category.Category;
@@ -23,11 +25,12 @@ public class Patient extends Person {
      * Every field must be present and not null.
      */
     public Patient(Uid uid, Name name, Gender gender, Phone phone, Email email, Address address,
-                   Set<Tag> tags, List<DateTime> dateTime, VisitStatus visitStatus) {
+            Set<Tag> tags, List<DateTime> dateTime, Optional<VisitStatus> visitStatus2) {
         super(uid, name, gender, phone, email, address, tags);
         requireAllNonNull(dateTime);
+        requireNonNull(visitStatus2);
         this.dateTimes.addAll(dateTime);
-        this.visitStatus = visitStatus;
+        this.visitStatus = visitStatus2.get();
     }
 
     public Category getCategory() {

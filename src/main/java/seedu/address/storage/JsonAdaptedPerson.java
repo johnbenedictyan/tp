@@ -6,6 +6,7 @@ import static seedu.address.model.category.Category.PATIENT_SYMBOL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -189,7 +190,7 @@ class JsonAdaptedPerson {
             }
             final VisitStatus modelVisitStatus = new VisitStatus(visitStatus);
             return new Patient(modelUid, modelName, modelGender, modelPhone, modelEmail,
-                    modelAddress, modelTags, modelDatesTimes, modelVisitStatus);
+                    modelAddress, modelTags, modelDatesTimes, Optional.of(modelVisitStatus));
         } else {
             throw new IllegalValueException(Category.MESSAGE_CONSTRAINTS);
         }

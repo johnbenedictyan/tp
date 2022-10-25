@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.model.category.Category;
@@ -179,7 +180,7 @@ public class PersonBuilder {
         if (category.categoryName.equals("N")) {
             return new Nurse(uid, name, gender, phone, email, address, tags);
         } else if (this.category.categoryName.equals("P")) {
-            return new Patient(uid, name, gender, phone, email, address, tags, dateTimeList, visitStatus);
+            return new Patient(uid, name, gender, phone, email, address, tags, dateTimeList, Optional.of(visitStatus));
         }
         return new Person(uid, name, gender, phone, email, address, tags);
 

@@ -5,7 +5,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Category in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidCategoryName(String)}
+ * Guarantees: immutable; name is valid as declared in
+ * {@link #isValidCategoryName(String)}
  */
 public class Category {
 
@@ -46,19 +47,27 @@ public class Category {
         return categoryName.hashCode();
     }
 
-
     public String toString() {
         return categoryName;
     }
 
     /**
      * Checks if the two category objects are equal, ignoring case.
+     *
      * @param other other object to be checked against
      * @return true if both categories are the same, false otherwise
      */
     public boolean equalsIgnoreCase(Object other) {
         return other == this
                 || (other instanceof Category)
-                && categoryName.equalsIgnoreCase(((Category) other).categoryName);
+                        && categoryName.equalsIgnoreCase(((Category) other).categoryName);
+    }
+
+    public boolean isNurse() {
+        return categoryName.equals(NURSE_SYMBOL);
+    }
+
+    public boolean isPatient() {
+        return categoryName.equals(PATIENT_SYMBOL);
     }
 }

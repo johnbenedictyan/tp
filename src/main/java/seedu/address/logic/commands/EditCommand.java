@@ -159,13 +159,13 @@ public class EditCommand extends Command {
             VisitStatus updatedVisitStatus = editPersonDescriptor.getVisitStatus()
                     .orElse(((Patient) personToEdit).getVisitStatus());
             return new Patient(uid, updatedName, updatedGender, updatedPhone, updatedEmail,
-                    updatedAddress, updatedTags, updatedDateTime, updatedVisitStatus);
+                    updatedAddress, updatedTags, updatedDateTime, Optional.of(updatedVisitStatus));
         } else if (updatedCategory.categoryName.equals("P")) {
             List<DateTime> updatedDateTime = editPersonDescriptor.getDatesTimes().orElse(null);
             VisitStatus updatedVisitStatus = editPersonDescriptor.getVisitStatus()
                     .orElse(((Patient) personToEdit).getVisitStatus());
             return new Patient(uid, updatedName, updatedGender, updatedPhone, updatedEmail,
-                    updatedAddress, updatedTags, updatedDateTime, updatedVisitStatus);
+                    updatedAddress, updatedTags, updatedDateTime, Optional.of(updatedVisitStatus));
         } else if (updatedCategory.categoryName.equals("N")) {
             return new Nurse(uid, updatedName, updatedGender, updatedPhone, updatedEmail, updatedAddress, updatedTags);
         } else {

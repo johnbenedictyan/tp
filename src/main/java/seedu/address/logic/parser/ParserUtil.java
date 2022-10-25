@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -29,7 +31,8 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    //public static final String MESSAGE_INVALID_DATE_TIME_INDEX = "Date time index is not a
+    // public static final String MESSAGE_INVALID_DATE_TIME_INDEX = "Date time index
+    // is not a
     // non-zero unsigned integer.";
 
     /**
@@ -90,7 +93,6 @@ public class ParserUtil {
         }
         return dateTimeIndexList;
     }
-
 
     /**
      * Parses a {@code String dateTime} into a {@code DateTime}.
@@ -228,12 +230,10 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code visitStatus} is invalid.
      */
-    public static VisitStatus parseVisitStatus(String visitStatus) throws ParseException {
-        requireNonNull(visitStatus);
-        String trimmedVisitStatus = visitStatus.trim();
-        if (!VisitStatus.isValidVisitStatus(trimmedVisitStatus)) {
+    public static Optional<VisitStatus> parseVisitStatus(Optional<String> visitStatus) throws ParseException {
+        if (visitStatus.isPresent() && !VisitStatus.isValidVisitStatus(visitStatus.get().trim())) {
             throw new ParseException(VisitStatus.MESSAGE_CONSTRAINTS);
         }
-        return new VisitStatus(visitStatus);
+        return visitStatus.map(visitStatusString -> new VisitStatus(visitStatusString.trim()));
     }
 }

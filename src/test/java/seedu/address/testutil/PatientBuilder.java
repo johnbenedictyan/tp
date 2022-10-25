@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
@@ -152,6 +153,6 @@ public class PatientBuilder {
      * Build a patient.
      */
     public Patient build() {
-        return new Patient(uid, name, gender, phone, email, address, tags, dateTimes, visitStatus);
+        return new Patient(uid, name, gender, phone, email, address, tags, dateTimes, Optional.of(visitStatus));
     }
 }

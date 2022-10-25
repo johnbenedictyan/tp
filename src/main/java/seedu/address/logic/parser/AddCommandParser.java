@@ -10,10 +10,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VISIT_STATUS;
-import static seedu.address.model.category.Category.NURSE_SYMBOL;
-import static seedu.address.model.category.Category.PATIENT_SYMBOL;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -25,8 +24,6 @@ import seedu.address.model.person.DateTime;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Gender;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Nurse;
-import seedu.address.model.person.Patient;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Uid;
@@ -41,6 +38,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
@@ -62,24 +60,18 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         List<DateTime> dateTimeList = ParserUtil.parseDatesTimes(argMultimap.getAllValues(PREFIX_DATE_AND_TIME));
+        Optional<VisitStatus> visitStatus = ParserUtil.parseVisitStatus(argMultimap.getValue(PREFIX_VISIT_STATUS));
 
-        String categorySymbol = category.toString();
-        Person person;
-
-        if (categorySymbol.equals(NURSE_SYMBOL)) {
-            person = new Nurse(id, name, gender, phone, email, address, tagList);
-        } else if (categorySymbol.equals(PATIENT_SYMBOL)) {
-            VisitStatus visitStatus = ParserUtil.parseVisitStatus(argMultimap.getValue(PREFIX_VISIT_STATUS).get());
-            person = new Patient(id, name, gender, phone, email, address, tagList, dateTimeList, visitStatus);
-        } else {
-            throw new ParseException("Illegal category detected!");
-        }
-
+        // Parse Category already checks that it is a valid category so there is no need
+        // to check again in this function
+        Person person = Person.of(category, id, name, gender, phone, email, address, tagList, dateTimeList,
+                visitStatus);
         return new AddCommand(person);
     }
 
     /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * Returns true if none of the prefixes contains empty {@code Optional} values
+     * in the given
      * {@code ArgumentMultimap}.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
