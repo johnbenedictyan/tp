@@ -71,7 +71,7 @@ public class ListCommand extends Command {
 
         String tagString = tags.isEmpty()
                 ? "NIL"
-                : tags.stream().map(tag -> tag.tagName).collect(Collectors.joining(","));
+                : tags.stream().map(tag -> tag.tagName).collect(Collectors.joining(", "));
         return new CommandResult(
                 String.format(MESSAGE_SUCCESS, address.map(addressObj -> addressObj.toString()).orElse("NIL"),
                         category.map(categoryObj -> categoryObj.toString()).orElse("NIL"),
