@@ -106,31 +106,36 @@ public class EditCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_UID);
         }
         Person confirmedPersonToEdit = personToEdit.get();
-        Person editedPerson = createEditedPerson(confirmedPersonToEdit, editPersonDescriptor);
-
-        boolean haveDatesTimes = editPersonDescriptor.dateTimePresent();
-        boolean haveDateTimeIndexes = editPersonDescriptor.dateTimeIndexPresent();
-        boolean haveVisitStatus = editPersonDescriptor.vistStatusPresent();
-
-        if (confirmedPersonToEdit.getCategory().equals(Category.NURSE_SYMBOL)) {
-            if (haveDateTimeIndexes || haveDatesTimes) {
-                throw new CommandException(MESSAGE_NURSE_INVALID_DATETIME_EDIT);
-            }
-            if (haveVisitStatus) {
-                throw new CommandException(MESSAGE_NURSE_INVALID_VISITSTATUS_EDIT);
-            }
+        try {
+            checkIsEditValid(confirmedPersonToEdit, editPersonDescriptor);
+        } catch (Exception e) {
+            throw new CommandException(e.getMessage());
         }
-
+        Person editedPerson = createEditedPerson(confirmedPersonToEdit, editPersonDescriptor);
         if (!confirmedPersonToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_PERSON,
                     confirmedPersonToEdit.getCategoryIndicator()));
         }
-
         model.setPerson(confirmedPersonToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS,
                 confirmedPersonToEdit.getCategoryIndicator(), editedPerson));
 
+    }
+
+    private void checkIsEditValid(Person confirmedPersonToEdit, EditPersonDescriptor editPersonDescriptor)
+            throws Exception {
+        boolean haveDatesTimes = editPersonDescriptor.dateTimePresent();
+        boolean haveDateTimeIndexes = editPersonDescriptor.dateTimeIndexPresent();
+        boolean haveVisitStatus = editPersonDescriptor.vistStatusPresent();
+        if (confirmedPersonToEdit.getCategory().isNurse()) {
+            if (haveDateTimeIndexes || haveDatesTimes) {
+                throw new Exception(MESSAGE_NURSE_INVALID_DATETIME_EDIT);
+            }
+            if (haveVisitStatus) {
+                throw new Exception(MESSAGE_NURSE_INVALID_VISITSTATUS_EDIT);
+            }
+        }
     }
 
     /**
@@ -140,6 +145,13 @@ public class EditCommand extends Command {
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor)
             throws CommandException {
         assert personToEdit != null;
+        // try {
+        // return Person.createReplacement(personToEdit, editPersonDescriptor);
+        // } catch (IllegalArgumentException e) {
+        // throw new IllegalArgumentException(Category.MESSAGE_CONSTRAINTS);
+        // }
+
+        // break;
 
         Category updatedCategory = editPersonDescriptor.getCategory().orElse(personToEdit.getCategory());
         Uid uid = editPersonDescriptor.getUid().orElse(personToEdit.getUid());
@@ -150,7 +162,7 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        if (personToEdit instanceof Patient && updatedCategory.categoryName.equals(Category.PATIENT_SYMBOL)) {
+        if (personToEdit instanceof Patient && updatedCategory.isNurse()) {
             List<DateTime> originalDateTime = ((Patient) personToEdit).getDatesTimes();
             Optional<List<DateTime>> toBeUpdateDateTime = editPersonDescriptor.getDatesTimes();
             Optional<List<Index>> toBeUpdateDateTimeIndexes = editPersonDescriptor.getDateTimeIndexes();
@@ -168,9 +180,8 @@ public class EditCommand extends Command {
                     updatedAddress, updatedTags, updatedDateTime, Optional.of(updatedVisitStatus));
         } else if (updatedCategory.categoryName.equals(Category.NURSE_SYMBOL)) {
             return new Nurse(uid, updatedName, updatedGender, updatedPhone, updatedEmail, updatedAddress, updatedTags);
-        } else {
-            throw new IllegalArgumentException(Category.MESSAGE_CONSTRAINTS);
         }
+        throw new IllegalArgumentException(Category.MESSAGE_CONSTRAINTS);
     }
 
     private static List<DateTime> createEditedDateTimeList(List<DateTime> originalDateTime,
