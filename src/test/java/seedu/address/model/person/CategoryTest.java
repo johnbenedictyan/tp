@@ -37,7 +37,7 @@ public class CategoryTest {
         assertFalse(Category.isValidCategoryName("NP")); // contains multiples of 'N' or 'P' instead of 'N' or 'P'
 
         // validCategory formats
-        assertTrue(Category.isValidCategoryName("N")); // Female
-        assertTrue(Category.isValidCategoryName(Category.PATIENT_SYMBOL)); // Male
+        assertTrue(Category.isValidCategoryName(Category.NURSE_SYMBOL)); // Nurse
+        assertTrue(Category.isValidCategoryName(Category.PATIENT_SYMBOL)); // Patient
     }
 }

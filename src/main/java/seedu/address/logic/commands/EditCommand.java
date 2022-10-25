@@ -112,7 +112,7 @@ public class EditCommand extends Command {
         boolean haveDateTimeIndexes = editPersonDescriptor.dateTimeIndexPresent();
         boolean haveVisitStatus = editPersonDescriptor.vistStatusPresent();
 
-        if (confirmedPersonToEdit.getCategory().equals("N")) {
+        if (confirmedPersonToEdit.getCategory().equals(Category.NURSE_SYMBOL)) {
             if (haveDateTimeIndexes || haveDatesTimes) {
                 throw new CommandException(MESSAGE_NURSE_INVALID_DATETIME_EDIT);
             }
@@ -166,7 +166,7 @@ public class EditCommand extends Command {
                     .orElse(((Patient) personToEdit).getVisitStatus());
             return new Patient(uid, updatedName, updatedGender, updatedPhone, updatedEmail,
                     updatedAddress, updatedTags, updatedDateTime, Optional.of(updatedVisitStatus));
-        } else if (updatedCategory.categoryName.equals("N")) {
+        } else if (updatedCategory.categoryName.equals(Category.NURSE_SYMBOL)) {
             return new Nurse(uid, updatedName, updatedGender, updatedPhone, updatedEmail, updatedAddress, updatedTags);
         } else {
             throw new IllegalArgumentException(Category.MESSAGE_CONSTRAINTS);

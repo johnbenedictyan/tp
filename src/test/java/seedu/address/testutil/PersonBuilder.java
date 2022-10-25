@@ -177,7 +177,7 @@ public class PersonBuilder {
      * Build a person for test.
      */
     public Person build() {
-        if (category.categoryName.equals("N")) {
+        if (category.categoryName.equals(Category.NURSE_SYMBOL)) {
             return new Nurse(uid, name, gender, phone, email, address, tags);
         } else if (this.category.categoryName.equals(Category.PATIENT_SYMBOL)) {
             return new Patient(uid, name, gender, phone, email, address, tags, dateTimeList, Optional.of(visitStatus));

@@ -33,7 +33,7 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
 public class CommandTestUtil {
 
     public static final String VALID_CATEGORY_AMY = Category.PATIENT_SYMBOL;
-    public static final String VALID_CATEGORY_BOB = "N";
+    public static final String VALID_CATEGORY_BOB = Category.NURSE_SYMBOL;
     public static final String VALID_UID_AMY = "10";
     public static final String VALID_UID_BOB = "11";
     public static final String VALID_NAME_AMY = "Amy Bee";

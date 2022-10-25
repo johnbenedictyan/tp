@@ -15,7 +15,7 @@ public class Nurse extends Person {
     }
 
     public Category getCategory() {
-        return new Category("N");
+        return new Category(Category.NURSE_SYMBOL);
     }
 
     @Override

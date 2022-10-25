@@ -69,7 +69,7 @@ public class TypicalPersons {
             .withTags("friends")
             .withVisitStatus("true").build();
     public static final Person ELLE = new PersonBuilder()
-            .withUid("5").withCategory("N")
+            .withUid("5").withCategory(Category.NURSE_SYMBOL)
             .withName("Elle Meyer").withGender("F")
             .withPhone("9482224")
             .withEmail("werner@example.com")
