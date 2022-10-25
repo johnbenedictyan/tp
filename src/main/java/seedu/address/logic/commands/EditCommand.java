@@ -108,9 +108,9 @@ public class EditCommand extends Command {
         Person confirmedPersonToEdit = personToEdit.get();
         Person editedPerson = createEditedPerson(confirmedPersonToEdit, editPersonDescriptor);
 
-        boolean haveDatesTimes = editPersonDescriptor.getDatesTimes().isPresent();
-        boolean haveDateTimeIndexes = editPersonDescriptor.getDateTimeIndexes().isPresent();
-        boolean haveVisitStatus = editPersonDescriptor.getVisitStatus().isPresent();
+        boolean haveDatesTimes = editPersonDescriptor.dateTimePresent();
+        boolean haveDateTimeIndexes = editPersonDescriptor.dateTimeIndexPresent();
+        boolean haveVisitStatus = editPersonDescriptor.vistStatusPresent();
 
         if (confirmedPersonToEdit.getCategory().equals("N")) {
             if (haveDateTimeIndexes || haveDatesTimes) {
@@ -159,7 +159,7 @@ public class EditCommand extends Command {
             VisitStatus updatedVisitStatus = editPersonDescriptor.getVisitStatus()
                     .orElse(((Patient) personToEdit).getVisitStatus());
             return new Patient(uid, updatedName, updatedGender, updatedPhone, updatedEmail,
-                        updatedAddress, updatedTags, updatedDateTime, updatedVisitStatus);
+                    updatedAddress, updatedTags, updatedDateTime, updatedVisitStatus);
         } else if (updatedCategory.categoryName.equals("P")) {
             List<DateTime> updatedDateTime = editPersonDescriptor.getDatesTimes().orElse(null);
             VisitStatus updatedVisitStatus = editPersonDescriptor.getVisitStatus()
@@ -174,8 +174,8 @@ public class EditCommand extends Command {
     }
 
     private static List<DateTime> createEditedDateTimeList(List<DateTime> originalDateTime,
-                                                           Optional<List<DateTime>> toBeUpdateDateTimes,
-                                                           Optional<List<Index>> toBeUpdateDateTimesIndexes)
+            Optional<List<DateTime>> toBeUpdateDateTimes,
+            Optional<List<Index>> toBeUpdateDateTimesIndexes)
             throws CommandException {
         List<DateTime> updatedDateTime = new ArrayList<>();
 
@@ -190,7 +190,7 @@ public class EditCommand extends Command {
         if (!isDateTimeIndexesNull) {
             toBeUpdateDateTimeIndexes = new ArrayList<>(toBeUpdateDateTimesIndexes.get());
 
-            //If the indexNo given is out of bound of the existing list -> throw exception
+            // If the indexNo given is out of bound of the existing list -> throw exception
             for (Index indexNo : toBeUpdateDateTimeIndexes) {
 
                 if (indexNo.getZeroBased() >= originalDateTime.size()) {
@@ -212,31 +212,31 @@ public class EditCommand extends Command {
 
             updatedDateTime = new ArrayList<>();
 
-        // [CASE 2]
-        // 1. dateTime null and dateTimeIndex non-null and non-empty
-        // 2. dateTime non-null but empty and dateTimeIndex non-null and non-empty ->
-        // Deletes the dateTime at specific index in the existing list
+            // [CASE 2]
+            // 1. dateTime null and dateTimeIndex non-null and non-empty
+            // 2. dateTime non-null but empty and dateTimeIndex non-null and non-empty ->
+            // Deletes the dateTime at specific index in the existing list
         } else if ((isDateTimeNull || isDateTimeEmpty) && !isDateTimeIndexesEmpty) {
 
             updatedDateTime = new ArrayList<>(originalDateTime);
 
             ReverseIndexComparator comp = new ReverseIndexComparator();
             toBeUpdateDateTimeIndexes.sort(comp);
-            for (Index index: toBeUpdateDateTimeIndexes) {
+            for (Index index : toBeUpdateDateTimeIndexes) {
                 updatedDateTime.remove(index.getZeroBased());
             }
 
-        // [CASE 3]
-        // 1. dateTime null and dateTimeIndex null ->
-        // Remain as original dateTime list, no changes made
+            // [CASE 3]
+            // 1. dateTime null and dateTimeIndex null ->
+            // Remain as original dateTime list, no changes made
         } else if (isDateTimeNull && isDateTimeIndexesNull) {
 
             updatedDateTime = new ArrayList<>(originalDateTime);
 
-        // [CASE 4]
-        // 1. dateTime non-null and not empty but dateTimeIndex null
-        // 2. dateTime non-null and not empty and dateTimeIndex non-null but empty   ->
-        // Add the given dateTime to the existing list
+            // [CASE 4]
+            // 1. dateTime non-null and not empty but dateTimeIndex null
+            // 2. dateTime non-null and not empty and dateTimeIndex non-null but empty ->
+            // Add the given dateTime to the existing list
         } else if (!isDateTimeEmpty && (isDateTimeIndexesNull || isDateTimeIndexesEmpty)) {
 
             updatedDateTime = new ArrayList<>(originalDateTime);
@@ -244,11 +244,14 @@ public class EditCommand extends Command {
                 updatedDateTime.add(dateTime);
             }
 
-        // [CASE 5]
-        // 1. dateTime non-null and not empty and dateTimeIndex non-null and not empty ->
-        // Change the dateTime at the specific index in the existing list to the given dateTime
-        // If index given more than date time given  -> throws exception
-        // If date time given more than index given -> the extra date time will be added to the existing list
+            // [CASE 5]
+            // 1. dateTime non-null and not empty and dateTimeIndex non-null and not empty
+            // ->
+            // Change the dateTime at the specific index in the existing list to the given
+            // dateTime
+            // If index given more than date time given -> throws exception
+            // If date time given more than index given -> the extra date time will be added
+            // to the existing list
         } else if (!isDateTimeEmpty && !isDateTimeIndexesEmpty) {
 
             updatedDateTime = new ArrayList<>(originalDateTime);
@@ -290,7 +293,6 @@ public class EditCommand extends Command {
         return targetUid.equals(e.targetUid)
                 && editPersonDescriptor.equals(e.editPersonDescriptor);
     }
-
 
     /**
      * Stores the details to edit the person with. Each non-empty field value will
@@ -451,6 +453,7 @@ public class EditCommand extends Command {
 
         /**
          * Sets {@code visitStatus} to this object's {@code visitStatus}.
+         *
          * @return
          */
         public EditPersonDescriptor setVisitStatus(VisitStatus visitStatus) {
@@ -492,6 +495,18 @@ public class EditCommand extends Command {
                     && getDateTimeIndexes().equals(e.getDateTimeIndexes())
                     && getTags().equals(e.getTags())
                     && getVisitStatus().equals(e.getVisitStatus());
+        }
+
+        public boolean dateTimePresent() {
+            return getDatesTimes().isPresent();
+        }
+
+        public boolean dateTimeIndexPresent() {
+            return getVisitStatus().isPresent();
+        }
+
+        public boolean vistStatusPresent() {
+            return getVisitStatus().isPresent();
         }
     }
 }
