@@ -106,11 +106,7 @@ public class EditCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_UID);
         }
         Person confirmedPersonToEdit = personToEdit.get();
-        try {
-            checkIsEditValid(confirmedPersonToEdit, editPersonDescriptor);
-        } catch (Exception e) {
-            throw new CommandException(e.getMessage());
-        }
+        checkIsEditValid(confirmedPersonToEdit, editPersonDescriptor);
         Person editedPerson = createEditedPerson(confirmedPersonToEdit, editPersonDescriptor);
         if (!confirmedPersonToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_PERSON,
@@ -124,16 +120,16 @@ public class EditCommand extends Command {
     }
 
     private void checkIsEditValid(Person confirmedPersonToEdit, EditPersonDescriptor editPersonDescriptor)
-            throws Exception {
+            throws CommandException {
         boolean haveDatesTimes = editPersonDescriptor.dateTimePresent();
         boolean haveDateTimeIndexes = editPersonDescriptor.dateTimeIndexPresent();
         boolean haveVisitStatus = editPersonDescriptor.vistStatusPresent();
         if (confirmedPersonToEdit.getCategory().isNurse()) {
             if (haveDateTimeIndexes || haveDatesTimes) {
-                throw new Exception(MESSAGE_NURSE_INVALID_DATETIME_EDIT);
+                throw new CommandException(MESSAGE_NURSE_INVALID_DATETIME_EDIT);
             }
             if (haveVisitStatus) {
-                throw new Exception(MESSAGE_NURSE_INVALID_VISITSTATUS_EDIT);
+                throw new CommandException(MESSAGE_NURSE_INVALID_VISITSTATUS_EDIT);
             }
         }
     }
