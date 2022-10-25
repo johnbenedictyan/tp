@@ -6,7 +6,6 @@ import static seedu.address.logic.commands.CommandTestUtil.GENDER_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIENDS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_JURONG;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_JURONG;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIENDS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
