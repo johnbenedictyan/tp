@@ -5,7 +5,10 @@
     "https://checkstyle.org/dtds/suppressions_1_2.dtd">
 
 <suppressions>
-  <suppress checks="JavadocType" files=".*Test\.java"/>
-  <suppress checks="MissingJavadocMethodCheck" files=".*Test\.java"/>
-  <suppress checks="MethodLength" files=".*Test\.java"/>
+    <suppress checks="JavadocType" files=".*Test\.java"/>
+    <suppress checks="MissingJavadocMethodCheck" files=".*Test\.java"/>
+    <suppress checks="MethodLength" files=".*Test\.java"/>
+    <suppress checks="MethodLength" files="[\\/]src[\\/]main[\\/]java[\\/]seedu[\\/]address[\\/]model[\\/]util[\\/]SampleDataUtil.java"/>
+    <suppress checks="MethodLength" files="[\\/]src[\\/]main[\\/]java[\\/]seedu[\\/]address[\\/]storage[\\/]JsonAdaptedPerson.java"/>
+    <suppress checks="MethodLength" files="[\\/]src[\\/]main[\\/]java[\\/]seedu[\\/]address[\\/]ui[\\/]PersonCard.java"/>
 </suppressions>
