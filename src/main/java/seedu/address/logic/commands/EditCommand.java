@@ -345,6 +345,12 @@ public class EditCommand extends Command {
             this.category = category;
         }
 
+        public void setCategory(Optional<Category> category) {
+            if (category.isPresent()) {
+                this.category = category.get();
+            }
+        }
+
         public Optional<Category> getCategory() {
             return Optional.ofNullable(category);
         }
@@ -367,12 +373,24 @@ public class EditCommand extends Command {
             this.name = name;
         }
 
+        public void setName(Optional<Name> name) {
+            if (name.isPresent()) {
+                this.name = name.get();
+            }
+        }
+
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
         }
 
         public void setGender(Gender gender) {
             this.gender = gender;
+        }
+
+        public void setGender(Optional<Gender> gender) {
+            if (gender.isPresent()) {
+                this.gender = gender.get();
+            }
         }
 
         public Optional<Gender> getGender() {
@@ -383,6 +401,12 @@ public class EditCommand extends Command {
             this.phone = phone;
         }
 
+        public void setPhone(Optional<Phone> phone) {
+            if (phone.isPresent()) {
+                this.phone = phone.get();
+            }
+        }
+
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
         }
@@ -391,12 +415,24 @@ public class EditCommand extends Command {
             this.email = email;
         }
 
+        public void setEmail(Optional<Email> email) {
+            if (email.isPresent()) {
+                this.email = email.get();
+            }
+        }
+
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
         }
 
         public void setAddress(Address address) {
             this.address = address;
+        }
+
+        public void setAddress(Optional<Address> address) {
+            if (address.isPresent()) {
+                this.address = address.get();
+            }
         }
 
         public Optional<Address> getAddress() {

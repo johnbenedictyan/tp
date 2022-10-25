@@ -82,6 +82,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String name} into a {@code Name}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @param name The name to be parsed
+     * @return The name optional
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static Optional<Name> parseName(Optional<String> name) throws ParseException {
+        if (name.isPresent() && !Name.isValidName(name.get().trim())) {
+            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        }
+        return name.map(nameStr -> new Name(name.get().trim()));
+    }
+
+    /**
      * Parses {@code Collection<String> dateTimeIndex} into a {@code List<Index>}.
      */
     public static List<Index> parseDateTimesIndexes(Collection<String> dateTimeIndexes) throws ParseException {
@@ -137,6 +152,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String phone} into a {@code Phone}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @param phone The phone number to parse
+     * @return The Phone Number optional
+     * @throws ParseException if the given {@code phone} is invalid.
+     */
+    public static Optional<Phone> parsePhone(Optional<String> phone) throws ParseException {
+        if (phone.isPresent() && !Phone.isValidPhone(phone.get().trim())) {
+            throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
+        }
+        return phone.map(phoneStr -> new Phone(phone.get().trim()));
+    }
+
+    /**
      * Parses a {@code String address} into an {@code Address}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -179,6 +209,21 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
+    }
+
+    /**
+     * Parses a {@code String email} into an {@code Email}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @param email The email to parse
+     * @return The Email optional
+     * @throws ParseException if the given {@code email} is invalid.
+     */
+    public static Optional<Email> parseEmail(Optional<String> email) throws ParseException {
+        if (email.isPresent() && !Email.isValidEmail(email.get().trim())) {
+            throw new ParseException(Email.MESSAGE_CONSTRAINTS);
+        }
+        return email.map(emailStr -> new Email(email.get().trim()));
     }
 
     /**
