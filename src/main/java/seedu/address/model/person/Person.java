@@ -51,6 +51,20 @@ public class Person {
         this.tags.addAll(tags);
     }
 
+    /**
+     * Building Pattern constructor of all the subclasses of Person
+     * @param category
+     * @param id
+     * @param name
+     * @param gender
+     * @param phone
+     * @param email
+     * @param address
+     * @param tagList
+     * @param dateTimeList
+     * @param visitStatus
+     * @return
+     */
     public static Person of(Category category, Uid id, Name name, Gender gender, Phone phone, Email email,
             Address address, Set<Tag> tagList, List<DateTime> dateTimeList, Optional<VisitStatus> visitStatus) {
         if (category.isNurse()) {

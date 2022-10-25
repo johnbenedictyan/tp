@@ -46,10 +46,12 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_ADDRESS_JURONG = "Jurong";
     public static final String VALID_DATETIME_AMY = "2022-11-11T15:30";
     public static final String VALID_DATETIME_BOB = "2022-10-24T09:00";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_TAG_FRIENDS = "friends";
     public static final String VALID_VISITED_STATUS = "true";
     public static final String VALID_NOT_VISITED_STATUS = "false";
 
@@ -77,9 +79,11 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
+    public static final String ADDRESS_DESC_JURONG = " " + PREFIX_ADDRESS + VALID_ADDRESS_JURONG;
     public static final String DATETIME_DESC_AMY = " " + PREFIX_DATE_AND_TIME + VALID_DATETIME_AMY;
     public static final String DATETIME_DESC_BOB = " " + PREFIX_DATE_AND_TIME + VALID_DATETIME_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
+    public static final String TAG_DESC_FRIENDS = " " + PREFIX_TAG + VALID_TAG_FRIENDS;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String VISIT_STATUS_DESC_AMY = " " + PREFIX_VISIT_STATUS + VALID_VISITED_STATUS;
 

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -153,6 +152,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String address} into an {@code Address} optional.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @param address The address to parse
+     * @return The Address optional
+     * @throws ParseException if the given {@code address} is invalid.
+     */
+    public static Optional<Address> parseAddress(Optional<String> address) throws ParseException {
+        if (address.isPresent() && !Address.isValidAddress(address.get().trim())) {
+            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
+        }
+        return address.map(addressStr -> new Address(address.get().trim()));
+    }
+
+    /**
      * Parses a {@code String email} into an {@code Email}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -210,6 +224,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String gender} into a {@code Gender} optional.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @param gender The gender string to parse
+     * @return The Gender optional
+     * @throws ParseException if the given {@code gender} is invalid.
+     */
+    public static Optional<Gender> parseGender(Optional<String> gender) throws ParseException {
+        if (gender.isPresent() && !Gender.isValidGender(gender.get().trim())) {
+            throw new ParseException(Gender.MESSAGE_CONSTRAINTS);
+        }
+        return gender.map(genderStr -> new Gender(gender.get().trim()));
+    }
+
+    /**
      * Parses a {@code String category} into a {@code Category}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -222,6 +251,21 @@ public class ParserUtil {
             throw new ParseException(Category.MESSAGE_CONSTRAINTS);
         }
         return new Category(trimmedCategory);
+    }
+
+    /**
+     * Parses a {@code String category} into a {@code Category} optional.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @param category Category string to parse
+     * @return The Category optional
+     * @throws ParseException if the given {@code category} is invalid.
+     */
+    public static Optional<Category> parseCategory(Optional<String> category) throws ParseException {
+        if (category.isPresent() && !Category.isValidCategoryName(category.get().trim())) {
+            throw new ParseException(Category.MESSAGE_CONSTRAINTS);
+        }
+        return category.map(categoryStr -> new Category(category.get().trim()));
     }
 
     /**

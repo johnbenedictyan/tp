@@ -4,6 +4,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +37,7 @@ public class ListCommandTest {
     @Test
     public void execute_noFiltersApplied_showsEverything() {
         Command listCommand = new ListCommand(Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Set.of());
         assertCommandSuccess(listCommand,
                 model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "NIL", "NIL"), expectedModel);
     }
@@ -47,7 +48,7 @@ public class ListCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
 
         Command listCommand = new ListCommand(Optional.of(new Address("Jurong")), Optional.empty(),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Set.of());
         assertCommandSuccess(listCommand,
                 model, String.format(ListCommand.MESSAGE_SUCCESS, "Jurong", "NIL", "NIL", "NIL"), expectedModel);
     }
@@ -58,7 +59,7 @@ public class ListCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
 
         Command listCommand = new ListCommand(Optional.empty(), Optional.of(new Category(Category.PATIENT_SYMBOL)),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Set.of());
         assertCommandSuccess(listCommand,
                 model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", Category.PATIENT_SYMBOL, "NIL", "NIL"),
                 expectedModel);
@@ -70,7 +71,7 @@ public class ListCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
 
         Command listCommand = new ListCommand(Optional.empty(), Optional.empty(),
-                Optional.of(new Gender(Gender.MALE_SYMBOL)), Optional.empty());
+                Optional.of(new Gender(Gender.MALE_SYMBOL)), Set.of());
         assertCommandSuccess(listCommand,
                 model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "M", "NIL"), expectedModel);
     }
@@ -81,7 +82,7 @@ public class ListCommandTest {
         expectedModel.updateFilteredPersonList(predicate);
 
         Command listCommand = new ListCommand(Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.of(new Tag("friends")));
+                Optional.empty(), Set.of(new Tag("friends")));
         assertCommandSuccess(listCommand,
                 model, String.format(ListCommand.MESSAGE_SUCCESS, "NIL", "NIL", "NIL", "friends"), expectedModel);
     }
@@ -100,7 +101,7 @@ public class ListCommandTest {
         Command listCommand = new ListCommand(Optional.of(new Address("Jurong")),
                 Optional.of(new Category(Category.PATIENT_SYMBOL)),
                 Optional.of(new Gender(Gender.FEMALE_SYMBOL)),
-                Optional.of(new Tag("friends")));
+                Set.of(new Tag("friends")));
         assertCommandSuccess(listCommand,
                 model, String.format(ListCommand.MESSAGE_SUCCESS, "Jurong", Category.PATIENT_SYMBOL, "F", "friends"),
                 expectedModel);

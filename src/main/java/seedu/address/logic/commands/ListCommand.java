@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import seedu.address.model.Model;
 import seedu.address.model.category.Category;
@@ -35,7 +37,7 @@ public class ListCommand extends Command {
     private final Optional<Address> address;
     private final Optional<Category> category;
     private final Optional<Gender> gender;
-    private final Optional<Tag> tag;
+    private final Set<Tag> tags;
 
     /**
      * @param a address to be filtered
@@ -43,11 +45,11 @@ public class ListCommand extends Command {
      * @param g gender to be filtered
      * @param t tag to be filtered
      */
-    public ListCommand(Optional<Address> a, Optional<Category> c, Optional<Gender> g, Optional<Tag> t) {
+    public ListCommand(Optional<Address> a, Optional<Category> c, Optional<Gender> g, Set<Tag> t) {
         address = a;
         category = c;
         gender = g;
-        tag = t;
+        tags = t;
     }
 
     @Override
@@ -58,23 +60,22 @@ public class ListCommand extends Command {
                 .map(category -> testPerson.getCategory().equals(category)).orElse(true);
         Predicate<Person> genderPredicate = testPerson -> gender.map(gender -> testPerson.getGender().equals(gender))
                 .orElse(true);
-        Predicate<Person> tagPredicate = testPerson -> tag.map(tag -> {
-            return testPerson.getTags().isEmpty()
-                    ? false
-                    : testPerson.getTags().contains(tag);
-        }).orElse(true);
-        Predicate<Person> predicate = addressPredicate.and(categoryPredicate).and(genderPredicate).and(tagPredicate);
+        Predicate<Person> tagsPredicate = testPerson -> tags.isEmpty()
+                ? true
+                : testPerson.getTags().isEmpty()
+                        ? false
+                        : tags.stream().anyMatch(targetTag -> testPerson.getTags().contains(targetTag));
+        Predicate<Person> predicate = addressPredicate.and(categoryPredicate).and(genderPredicate).and(tagsPredicate);
 
         model.updateFilteredPersonList(predicate);
 
-        final String[] filteredGender = new String[1];
-        gender.ifPresentOrElse(x -> filteredGender[0] = x.gender, () -> filteredGender[0] = "NIL");
-        final String[] filteredCategory = new String[1];
-        category.ifPresentOrElse(x -> filteredCategory[0] = x.categoryName, () -> filteredCategory[0] = "NIL");
-        return new CommandResult(String.format(MESSAGE_SUCCESS, address.orElse(new Address("NIL")).value,
-                filteredCategory[0],
-                filteredGender[0],
-                tag.orElse(new Tag("NIL")).tagName));
+        String tagString = tags.isEmpty()
+                ? "NIL"
+                : tags.stream().map(tag -> tag.tagName).collect(Collectors.joining(","));
+        return new CommandResult(
+                String.format(MESSAGE_SUCCESS, address.map(addressObj -> addressObj.toString()).orElse("NIL"),
+                        category.map(categoryObj -> categoryObj.toString()).orElse("NIL"),
+                        gender.map(genderObj -> genderObj.toString()).orElse("NIL"), tagString));
     }
 
     @Override
@@ -94,6 +95,6 @@ public class ListCommand extends Command {
         return address.equals(e.address)
                 && category.equals(e.category)
                 && gender.equals(e.gender)
-                && tag.equals(e.tag);
+                && tags.equals(e.tags);
     }
 }
