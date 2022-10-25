@@ -75,6 +75,7 @@ public class Person {
     public Address getAddress() {
         return address;
     }
+
     public Category getCategory() {
         return null;
     }
