@@ -123,7 +123,7 @@ public class EditCommand extends Command {
             throws CommandException {
         boolean haveDatesTimes = editPersonDescriptor.dateTimePresent();
         boolean haveDateTimeIndexes = editPersonDescriptor.dateTimeIndexPresent();
-        boolean haveVisitStatus = editPersonDescriptor.vistStatusPresent();
+        boolean haveVisitStatus = editPersonDescriptor.visitStatusPresent();
         if (confirmedPersonToEdit.getCategory().isNurse()) {
             if (haveDateTimeIndexes || haveDatesTimes) {
                 throw new CommandException(MESSAGE_NURSE_INVALID_DATETIME_EDIT);
@@ -548,7 +548,7 @@ public class EditCommand extends Command {
             return getVisitStatus().isPresent();
         }
 
-        public boolean vistStatusPresent() {
+        public boolean visitStatusPresent() {
             return getVisitStatus().isPresent();
         }
     }
